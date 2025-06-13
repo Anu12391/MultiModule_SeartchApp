@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName
 data class RecipeResponse(
 
 	@field:SerializedName("meals")
-	val meals: List<MealsItem?>? = null
+	val meals: List<RecipesDTO?>? = null
 )
 
-data class MealsItem(
+data class RecipesDTO(
 
 	@field:SerializedName("strImageSource")
 	val strImageSource: Any? = null,

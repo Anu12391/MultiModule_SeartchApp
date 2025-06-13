@@ -52,7 +52,7 @@ test-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", ve
 #networking
 retrofit = { module = "com.squareup.retrofit2:retrofit", version = "2.9.0" }
 retrofit-gson-convertor = { module = "com.squareup.retrofit2:converter-gson", version = "2.9.0" }
-gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+#gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 #lifecycle
 lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version = "2.7.0" }
 lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version = "2.7.0" }
