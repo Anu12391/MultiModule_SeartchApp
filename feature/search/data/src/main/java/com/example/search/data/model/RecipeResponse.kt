@@ -1,5 +1,6 @@
 package com.example.search.data.model
 
+import com.example.search.domain.model.RecipesDetails
 import com.google.gson.annotations.SerializedName
 
 data class RecipeResponse(
@@ -11,7 +12,7 @@ data class RecipeResponse(
 data class RecipeDetailResponse(
 
 	@field:SerializedName("meals")
-	val meals: List<RecipesDTO>? = null
+	val meals: List<RecipesDetailsDTO>? = null
 )
 
 

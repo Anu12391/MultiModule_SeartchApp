@@ -12,7 +12,7 @@ class SearchRepoImpl(val searchApiService: SearchApiService) : SearchRepository 
         return if (response.isSuccessful) {
             response.body()?.meals?.let {
                 Result.success(it.toDomain())
-            }?:run {
+            } ?: run {
                 Result.failure(Exception("error occured"))
             }
 
@@ -23,19 +23,19 @@ class SearchRepoImpl(val searchApiService: SearchApiService) : SearchRepository 
     }
 
     override suspend fun getRecipeDetails(id: String): Result<List<RecipesDetails>> {
-        val response=searchApiService.getRecipeDetails(id)
-       return if(response.isSuccessful){
-            response.body()?.meals?.let{
-                if(it.isNotEmpty()){
-                    it.toDomain()
-                }else{
+        val response = searchApiService.getRecipeDetails(id)
+        return if (response.isSuccessful) {
+            response.body()?.meals?.let {
+                if (it.isNotEmpty()) {
+                    Result.success(it.toDomain())
+                } else {
                     Result.failure(Exception("error occured"))
 
                 }
-                it.toDomain()
-            }?:run {   Result.failure(Exception("error occured")) }
-        }else{
-           Result.failure(Exception("error occured"))
-       }
+
+            } ?: run { Result.failure(Exception("error occured")) }
+        } else {
+            Result.failure(Exception("error occured"))
+        }
     }
 }
