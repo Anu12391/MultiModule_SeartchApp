@@ -22,12 +22,13 @@ class SearchRepoImpl(val searchApiService: SearchApiService) : SearchRepository 
 
     }
 
-    override suspend fun getRecipeDetails(id: String): Result<List<RecipesDetails>> {
+    override suspend fun getRecipeDetails(id: String): Result<RecipesDetails> {
         val response = searchApiService.getRecipeDetails(id)
         return if (response.isSuccessful) {
             response.body()?.meals?.let {
                 if (it.isNotEmpty()) {
-                    Result.success(it.toDomain())
+
+                    Result.success(it.first().toDomain())
                 } else {
                     Result.failure(Exception("error occured"))
 
