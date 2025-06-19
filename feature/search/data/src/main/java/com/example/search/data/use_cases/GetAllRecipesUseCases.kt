@@ -21,7 +21,7 @@ class GetAllRecipesUseCases constructor(@Inject val searchRepository: SearchRepo
             emit(NetworkResult.Error(message = response.exceptionOrNull()?.localizedMessage))
         }
     }.catch {
-        emit(NetworkResult.Error(message = it.localizedMessage ?: "Unexpected error occurred"))
+        emit(NetworkResult.Error(message = it.message ?: "Unexpected error occurred"))
     }.flowOn(Dispatchers.IO)
 
 }
