@@ -9,16 +9,22 @@ import com.example.search.domain.repository.SearchRepository
 class SearchRepoImpl(val searchApiService: SearchApiService) : SearchRepository {
     override suspend fun getRecipes(s: String): Result<List<Recipes>> {
         val response = searchApiService.getRecipes(s)
-        return if (response.isSuccessful) {
-            response.body()?.meals?.let {
-                Result.success(it.toDomain())
-            } ?: run {
+        return try {
+            if (response.isSuccessful) {
+                response.body()?.meals?.let {
+                    Result.success(it.toDomain())
+                } ?: run {
+                    Result.failure(Exception("error occured"))
+                }
+
+            } else {
                 Result.failure(Exception("error occured"))
             }
 
-        } else {
-            Result.failure(Exception("error occured"))
+        } catch (e: Exception) {
+            Result.failure(e)
         }
+
 
     }
 
