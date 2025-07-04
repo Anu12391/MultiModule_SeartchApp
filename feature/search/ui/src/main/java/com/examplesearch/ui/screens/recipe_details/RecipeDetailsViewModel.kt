@@ -1,6 +1,7 @@
 package com.examplesearch.ui.screens.recipe_details
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.common.utils.NetworkResult
 import com.example.common.utils.UiText
 import com.example.search.data.use_cases.GetRecipeDetailsUseCases
@@ -10,7 +11,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,22 +22,37 @@ class RecipeDetailsViewModel @Inject constructor(private val getRecipeDetailsUse
 
     private val _uiState = MutableStateFlow(RecipeDetails.UiState())
     val uiState: StateFlow<RecipeDetails.UiState> get() = _uiState.asStateFlow()
-
-fun recipeDetails(id:String)=getRecipeDetailsUseCases.invoke(id).onEach {
-    result->
-    when(result){
-        is NetworkResult.Error -> TODO()
-        is NetworkResult.Loading -> TODO()
-        is NetworkResult.Success -> TODO()
+    fun onEvent(event: RecipeDetails.Event) {
+        when (event) {
+            is RecipeDetails.Event.FetchRecipeDetails -> {
+                recipeDetails(event.id)
+            }
+        }
     }
 
-}
+
+    private fun recipeDetails(id: String) = getRecipeDetailsUseCases.invoke(id).onEach { result ->
+        when (result) {
+            is NetworkResult.Error -> {
+                _uiState.update { RecipeDetails.UiState(error = UiText.RemoteString(result.message.toString())) }
+            }
+
+            is NetworkResult.Loading -> {
+                _uiState.update { RecipeDetails.UiState(isLoading = true) }
+            }
+
+            is NetworkResult.Success -> {
+                _uiState.update { RecipeDetails.UiState(data = result.data) }
+            }
+        }
+
+    }.launchIn(viewModelScope)
 
     object RecipeDetails {
         data class UiState(
             val isLoading: Boolean = false,
             val error: UiText = UiText.Idle,
-            val data: List<RecipesDetails>? = null,
+            val data: RecipesDetails? = null,
         )
 
         sealed interface Navigation {
@@ -43,7 +61,7 @@ fun recipeDetails(id:String)=getRecipeDetailsUseCases.invoke(id).onEach {
         }
 
         sealed interface Event {
-
+            data class FetchRecipeDetails(val id: String) : Event
 
         }
     }
