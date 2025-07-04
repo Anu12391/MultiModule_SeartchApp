@@ -39,6 +39,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.dagger.hilt)
     implementation(project(":feature:search:data"))
+    implementation(project(":feature:search:domain"))
+    implementation(libs.lifecycle.viewmodel)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
