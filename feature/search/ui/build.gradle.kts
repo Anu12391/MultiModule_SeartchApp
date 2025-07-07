@@ -49,4 +49,5 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(project(":common"))
+    implementation(libs.navigation.compose) // Or latest
 }

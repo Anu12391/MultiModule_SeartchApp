@@ -1,5 +1,6 @@
 package com.examplesearch.ui.navigation
 
+import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.common.navigation.FeatureApi
 import com.example.common.navigation.NavigationRoutes
@@ -16,8 +17,7 @@ class SearchFeatureApiImpl : SearchFeatureApi {
             route = NavigationSubGraphRoutes.Search.routes,
             startDestination = NavigationRoutes.RecipeList.routes
         ) {
-           // composable(route = NavigationRoutes.RecipeList.routes) {
-
+            composable(route = NavigationRoutes.RecipeList.routes) {
             }
         }
     }
