@@ -19,6 +19,9 @@ class SearchFeatureApiImpl : SearchFeatureApi {
         ) {
             composable(route = NavigationRoutes.RecipeList.routes) {
             }
+
+            composable(route = NavigationRoutes.RecipeList.routes) {
+            }
         }
     }
 
