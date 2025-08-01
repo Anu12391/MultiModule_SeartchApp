@@ -15,6 +15,7 @@ gson = "2.10.1"
 navigationCommonAndroid = "2.9.1"
 navigationRuntimeAndroid = "2.9.1"
 compose = "1.5.3"
+navigationComposeJvmstubs = "2.9.3"
 
 
 
@@ -99,6 +100,7 @@ androidx-navigation-runtime-android = { group = "androidx.navigation", name = "n
 compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compose" }
 compose-material = { group = "androidx.compose.material", name = "material", version.ref = "compose" }
 compose-navigation = { group = "androidx.navigation:navigation-compose", name = "navigation_compose", version.ref = "compose" }
+androidx-navigation-compose-jvmstubs = { group = "androidx.navigation", name = "navigation-compose-jvmstubs", version.ref = "navigationComposeJvmstubs" }
 
 
 [plugins]

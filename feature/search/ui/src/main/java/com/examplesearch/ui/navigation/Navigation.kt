@@ -6,7 +6,7 @@ import com.example.common.navigation.FeatureApi
 import com.example.common.navigation.NavigationRoutes
 import com.example.common.navigation.NavigationSubGraphRoutes
 
-interface SearchFeatureApi : FeatureApi
+interface SearchFeatureApi : FeatureApi{}
 
 class SearchFeatureApiImpl : SearchFeatureApi {
     override fun registerGraph(

@@ -5,8 +5,9 @@ import com.example.search.data.remote.SearchApiService
 import com.example.search.domain.model.Recipes
 import com.example.search.domain.model.RecipesDetails
 import com.example.search.domain.repository.SearchRepository
+import javax.inject.Inject
 
-class SearchRepoImpl(val searchApiService: SearchApiService) : SearchRepository {
+class SearchRepoImpl @Inject constructor(val searchApiService: SearchApiService) : SearchRepository {
     override suspend fun getRecipes(s: String): Result<List<Recipes>> {
         val response = searchApiService.getRecipes(s)
         return try {
