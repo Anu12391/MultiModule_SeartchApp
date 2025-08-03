@@ -17,7 +17,7 @@ data class Recipes(
     val strArea: String? = null,
     val strCreativeCommonsConfirmed: Any? = null,
     val strIngredient19: String? = null,
-    val strTags: String? = null,
+    val strTags: String? = "",
     val idMeal: String? = null,
     val strInstructions: String? = null,
     val strIngredient1: String? = null,

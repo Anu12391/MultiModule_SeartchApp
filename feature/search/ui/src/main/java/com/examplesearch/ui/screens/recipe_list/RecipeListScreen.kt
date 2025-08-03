@@ -1,6 +1,8 @@
 package com.examplesearch.ui.screens.recipe_list
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -10,6 +12,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -79,6 +82,15 @@ fun RecipeListScreen(modifier: Modifier = Modifier, viewModel: RecipeListViewMod
                                 .fillMaxWidth()
                                 .height(200.dp)
                         )
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Text(
+                            text = item.strMeal.toString(),
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                        Spacer(modifier = Modifier.height(12.dp))
+                        if (item.strTags.toString().isNotEmpty()){
+                            FlowRow {  }
+                        }
                     }
                 }
             }
