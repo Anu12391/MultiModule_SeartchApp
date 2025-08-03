@@ -51,4 +51,5 @@ dependencies {
 
     implementation(project(":common"))
     implementation(libs.navigation.compose) // Or latest
+    implementation(libs.coil.compose) // Or latest
 }
