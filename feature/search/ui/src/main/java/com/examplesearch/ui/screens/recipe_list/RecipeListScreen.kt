@@ -4,6 +4,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -18,6 +21,7 @@ import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import com.example.common.utils.UiText
 
 @Composable
@@ -26,41 +30,44 @@ fun RecipeListScreen(modifier: Modifier = Modifier, viewModel: RecipeListViewMod
     val query = rememberSaveable { mutableStateOf("") }
     val context = LocalContext.current
 
-    Scaffold(
-        topBar = {
-            TextField(
-                value = query.value,
-                onValueChange = {
-                    query.value = it
-                },
-                colors = TextFieldDefaults.colors(
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedTextColor = Color.Transparent,
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent
-                ),
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
-    ) {
+    Scaffold(topBar = {
+        TextField(
+            value = query.value, onValueChange = {
+                query.value = it
+            }, colors = TextFieldDefaults.colors(
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedTextColor = Color.Transparent,
+                focusedContainerColor = Color.Transparent,
+                unfocusedContainerColor = Color.Transparent
+            ), modifier = Modifier.fillMaxWidth()
+        )
+    }) {
 
         if (uiState.value.isLoading) {
             Box(
-                modifier = Modifier.padding(it).fillMaxSize(),
-                contentAlignment = Alignment.Center
+                modifier = Modifier.padding(it).fillMaxSize(), contentAlignment = Center
             ) {
                 CircularProgressIndicator()
             }
         }
         if (uiState.value.error != UiText.Idle) {
             Box(
-                modifier = Modifier.padding(it).fillMaxSize(),
-                contentAlignment = Alignment.Center
+                modifier = Modifier.padding(it).fillMaxSize(), contentAlignment = Center
             ) {
                 Text(text = uiState.value.error.getString(context))
             }
         }
+        uiState.value.data?.let { list ->
+            LazyColumn(modifier = Modifier.padding(it).fillMaxSize()) {
+                item(list) {
+                    Card(
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
+                        shape = RoundedCornerShape(12.dp)){
 
+                    }
+                }
+            }
+        }
     }
 
 
