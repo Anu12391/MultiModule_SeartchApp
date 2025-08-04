@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.common.utils.UiText
@@ -48,6 +49,7 @@ fun RecipeListScreen(
 
     Scaffold(topBar = {
         TextField(
+            placeholder = { Text("Search Here.....", style = MaterialTheme.typography.bodyMedium) },
             value = query.value, onValueChange = {
                 query.value = it
                 viewModel.onEvent(RecipeList.Event.SearchRecipe(query.value))
@@ -84,7 +86,7 @@ fun RecipeListScreen(
                     Card(
                         modifier = Modifier
                             .padding(horizontal = 12.dp, vertical = 4.dp).clickable {
-                                onClick.invoke(item.idMeal?:"-1")
+                                onClick.invoke(item.idMeal ?: "-1")
                             },
                         shape = RoundedCornerShape(12.dp)
                     ) {
