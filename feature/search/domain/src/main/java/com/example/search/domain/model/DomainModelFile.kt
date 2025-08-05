@@ -110,5 +110,6 @@ data class RecipesDetails(
     val strMeasure16: String? = null,
     val strMeasure17: String? = null,
     val strMeasure14: String? = null,
-    val strMeasure15: String? = null
+    val strMeasure15: String? = null,
+    val ingredientPair: List<Pair<String,String>>?=null
 )
