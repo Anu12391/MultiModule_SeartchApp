@@ -53,7 +53,7 @@ class SearchFeatureApiImpl : SearchFeatureApi {
                     viewModel = viewModel, navHostController = navHostController, onNavigationClick = {
 
                     }
-                  
+
                 )
 
             }
