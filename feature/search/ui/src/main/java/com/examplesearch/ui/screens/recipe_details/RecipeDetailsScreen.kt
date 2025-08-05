@@ -1,6 +1,9 @@
 package com.examplesearch.ui.screens.recipe_details
 
+import android.graphics.Paint.Align
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Arrangement.SpaceBetween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -22,10 +26,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.common.utils.UiText
@@ -62,7 +68,7 @@ fun RecipeDetailsScreen(modifier: Modifier = Modifier, viewModel: RecipeDetailsV
             }
 
             uiState.value.data?.let {
-                Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
+                Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(8.dp)) {
                     AsyncImage(
                         model = it.strMealThumb,
                         contentDescription = null,
@@ -74,12 +80,13 @@ fun RecipeDetailsScreen(modifier: Modifier = Modifier, viewModel: RecipeDetailsV
                 }
                 Spacer(modifier = Modifier.height(12.dp))
                 it.ingredientPair?.forEach {
-                    Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp)) {
+                    Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp), verticalAlignment =Alignment.CenterVertically) {
                         AsyncImage(
                             model = getIngredientsUrl(it.first),
                             contentDescription = null,
 
                             modifier = Modifier.background(color = Color.White, shape = CircleShape)
+                                .size(60.dp)
                                 .clip(
                                     CircleShape
                                 )
