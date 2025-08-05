@@ -39,6 +39,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.flowWithLifecycle
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.common.utils.UiText
 import com.example.search.domain.model.RecipesDetails
@@ -49,6 +50,7 @@ import kotlinx.coroutines.flow.collectLatest
 fun RecipeDetailsScreen(
     modifier: Modifier = Modifier,
     viewModel: RecipeDetailsViewModel,
+    navHostController: NavHostController,
     onNavigationClick: () -> Unit,
     onDeleteClick: (RecipesDetails) -> Unit,
     onFavouriteClick: (RecipesDetails) -> Unit,
@@ -62,7 +64,7 @@ fun RecipeDetailsScreen(
             .collectLatest { navigation ->
                 when (navigation) {
                     RecipeDetailsViewModel.RecipeDetails.Navigation.GoToRecipeListScreen -> {
-                        
+                        navHostController.popBackStack()
                     }
                 }
 
