@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
@@ -23,6 +24,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -32,20 +34,38 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.flowWithLifecycle
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import com.example.common.navigation.NavigationRoutes
 import com.example.common.utils.UiText
+import kotlinx.coroutines.flow.collectLatest
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun RecipeListScreen(
     modifier: Modifier = Modifier,
     viewModel: RecipeListViewModel,
-    onClick: (String) -> Unit
+    onClick: (String) -> Unit,
+    navHostController:NavHostController
 ) {
     val uiState = viewModel.uiState.collectAsState()
     val query = rememberSaveable { mutableStateOf("") }
     val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(key1 = viewModel.navigation) {
+        viewModel.navigation.flowWithLifecycle(lifecycleOwner.lifecycle).collectLatest {
+            when (it) {
+                is RecipeList.Navigation.GotoRecipeDetails -> {
+                    navHostController.navigate(NavigationRoutes.RecipeDetails.sendId(it.id))
+                }
+            }
+        }
+
+    }
 
     Scaffold(topBar = {
         TextField(
@@ -98,9 +118,25 @@ fun RecipeListScreen(
                                 .height(200.dp)
                         )
                         Spacer(modifier = Modifier.height(12.dp))
+                        Column(
+                            modifier = Modifier.padding(12.dp).fillMaxWidth()
+                                .padding(horizontal = 12.dp)
+                        ) {
+
+                        }
+
+
+
                         Text(
                             text = item.strMeal.toString(),
                             style = MaterialTheme.typography.bodyLarge
+                        )
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Text(
+                            text = item.strInstructions.toString(),
+                            style = MaterialTheme.typography.bodyMedium,
+                            overflow = TextOverflow.Ellipsis,
+                            maxLines = 4
                         )
                         Spacer(modifier = Modifier.height(12.dp))
                         if (item.strTags.toString().isNotEmpty()) {
@@ -108,9 +144,10 @@ fun RecipeListScreen(
                                 item.strTags?.split(",")?.forEach {
                                     Box(
                                         modifier = Modifier.wrapContentSize()
+                                            .padding(horizontal = 8.dp, vertical = 4.dp)
                                             .background(
                                                 color = Color.White,
-                                                shape = RoundedCornerShape(12.dp)
+                                                shape = RoundedCornerShape(24.dp)
                                             ).clip(RoundedCornerShape(12.dp))
                                             .border(
                                                 width = 1.dp,

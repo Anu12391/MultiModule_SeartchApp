@@ -8,11 +8,14 @@ import com.example.search.data.use_cases.GetAllRecipesUseCases
 import com.example.search.domain.model.Recipes
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,11 +25,20 @@ class RecipeListViewModel @Inject constructor(private val getAllRecipesUseCases:
     ViewModel() {
     private val _uiState = MutableStateFlow(RecipeList.UiState())
     val uiState: StateFlow<RecipeList.UiState> get() = _uiState.asStateFlow()
+    private val _navigation = Channel<RecipeList.Navigation>()
+    val navigation: Flow<RecipeList.Navigation> = _navigation.receiveAsFlow()
 
     fun onEvent(event: RecipeList.Event) {
         when (event) {
             is RecipeList.Event.SearchRecipe -> {
                 search(event.q)
+            }
+
+            is RecipeList.Event.GoToRecipeDetails -> {
+                viewModelScope.launch {
+                    _navigation.send(RecipeList.Navigation.GotoRecipeDetails(event.id))
+                }
+
             }
         }
     }
@@ -72,6 +84,7 @@ object RecipeList {
 
     sealed interface Event {
         data class SearchRecipe(val q: String) : Event
+        data class GoToRecipeDetails(val id: String) : Event
 
     }
 }

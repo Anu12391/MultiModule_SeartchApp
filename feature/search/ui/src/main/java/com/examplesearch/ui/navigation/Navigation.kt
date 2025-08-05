@@ -9,10 +9,11 @@ import androidx.navigation.navigation
 import com.example.common.navigation.FeatureApi
 import com.example.common.navigation.NavigationRoutes
 import com.example.common.navigation.NavigationSubGraphRoutes
+import com.examplesearch.ui.screens.recipe_list.RecipeList
 import com.examplesearch.ui.screens.recipe_list.RecipeListScreen
 import com.examplesearch.ui.screens.recipe_list.RecipeListViewModel
 
-interface SearchFeatureApi : FeatureApi{}
+interface SearchFeatureApi : FeatureApi {}
 
 class SearchFeatureApiImpl : SearchFeatureApi {
     override fun registerGraph(
@@ -24,13 +25,16 @@ class SearchFeatureApiImpl : SearchFeatureApi {
             startDestination = NavigationRoutes.RecipeList.routes
         ) {
             composable(route = NavigationRoutes.RecipeList.routes) {
-                val viewModel= hiltViewModel<RecipeListViewModel> ()
-                    RecipeListScreen(
-                        viewModel = viewModel,
-                        modifier = TODO(),
-                        onClick = TODO()
-                    )
-                
+                val viewModel = hiltViewModel<RecipeListViewModel>()
+                RecipeListScreen(
+                    viewModel = viewModel,
+
+                    onClick = { mealId ->
+                        viewModel.onEvent(RecipeList.Event.GoToRecipeDetails(mealId))
+                    },
+                    navHostController = navHostController
+                )
+
             }
 
             composable(route = NavigationRoutes.RecipeList.routes) {
