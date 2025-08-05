@@ -27,6 +27,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
@@ -36,9 +37,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.flowWithLifecycle
 import coil.compose.AsyncImage
 import com.example.common.utils.UiText
 import com.example.search.domain.model.RecipesDetails
+import kotlinx.coroutines.flow.collectLatest
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,7 +54,21 @@ fun RecipeDetailsScreen(
     onFavouriteClick: (RecipesDetails) -> Unit,
 ) {
     val uiState = viewModel.uiState.collectAsState()
+    val lifecycleOwner = LocalLifecycleOwner.current
     val context = LocalContext.current
+
+    LaunchedEffect(key1 = viewModel.navigation) {
+        viewModel.navigation.flowWithLifecycle(lifecycleOwner.lifecycle)
+            .collectLatest { navigation ->
+                when (navigation) {
+                    RecipeDetailsViewModel.RecipeDetails.Navigation.GoToRecipeListScreen -> {
+                        
+                    }
+                }
+
+            }
+
+    }
     Scaffold(
         topBar = {
             TopAppBar(title = {
