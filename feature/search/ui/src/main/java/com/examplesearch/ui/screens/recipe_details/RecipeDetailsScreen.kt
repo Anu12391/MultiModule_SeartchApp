@@ -52,8 +52,8 @@ fun RecipeDetailsScreen(
     viewModel: RecipeDetailsViewModel,
     navHostController: NavHostController,
     onNavigationClick: () -> Unit,
-    onDeleteClick: (RecipesDetails) -> Unit,
-    onFavouriteClick: (RecipesDetails) -> Unit,
+  /*  onDeleteClick: (RecipesDetails) -> Unit,
+    onFavouriteClick: (RecipesDetails) -> Unit,*/
 ) {
     val uiState = viewModel.uiState.collectAsState()
     val lifecycleOwner = LocalLifecycleOwner.current

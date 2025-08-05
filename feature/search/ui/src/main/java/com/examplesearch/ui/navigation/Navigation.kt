@@ -49,7 +49,12 @@ class SearchFeatureApiImpl : SearchFeatureApi {
                     }
                 }
 
-                RecipeDetailsScreen(viewModel = viewModel, navHostController = navHostController)
+                RecipeDetailsScreen(
+                    viewModel = viewModel, navHostController = navHostController, onNavigationClick = {
+
+                    }
+                  
+                )
 
             }
         }
