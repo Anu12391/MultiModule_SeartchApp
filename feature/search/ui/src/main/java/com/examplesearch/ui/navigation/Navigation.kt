@@ -1,7 +1,7 @@
 package com.examplesearch.ui.navigation
 
+import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -11,7 +11,7 @@ import com.example.common.navigation.NavigationRoutes
 import com.example.common.navigation.NavigationSubGraphRoutes
 import com.examplesearch.ui.screens.recipe_details.RecipeDetailsScreen
 import com.examplesearch.ui.screens.recipe_details.RecipeDetailsViewModel
-import com.examplesearch.ui.screens.recipe_details.RecipeDetailsViewModel.RecipeDetails.Event.FetchRecipeDetails
+import com.examplesearch.ui.screens.recipe_details.RecipeDetailsViewModel.RecipeDetails
 import com.examplesearch.ui.screens.recipe_list.RecipeList
 import com.examplesearch.ui.screens.recipe_list.RecipeListScreen
 import com.examplesearch.ui.screens.recipe_list.RecipeListViewModel
@@ -43,11 +43,12 @@ class SearchFeatureApiImpl : SearchFeatureApi {
             composable(route = NavigationRoutes.RecipeDetails.routes) {
                 val viewModel = hiltViewModel<RecipeDetailsViewModel>()
                 val mealId=it.arguments?.getString("id")
-                mealId?.let {
-                    viewModel.onEvent(FetchRecipeDetails){
-
+                LaunchedEffect(key1=mealId){
+                    mealId?.let {
+                        viewModel.onEvent(RecipeDetails.Event.FetchRecipeDetails(it))
                     }
                 }
+
                 RecipeDetailsScreen(viewModel = viewModel)
 
             }
