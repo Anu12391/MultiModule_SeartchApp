@@ -30,6 +30,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
@@ -72,6 +73,7 @@ fun RecipeDetailsScreen(modifier: Modifier = Modifier, viewModel: RecipeDetailsV
                     AsyncImage(
                         model = it.strMealThumb,
                         contentDescription = null,
+                        contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(300.dp)
@@ -84,7 +86,7 @@ fun RecipeDetailsScreen(modifier: Modifier = Modifier, viewModel: RecipeDetailsV
                         AsyncImage(
                             model = getIngredientsUrl(it.first),
                             contentDescription = null,
-
+                            contentScale = ContentScale.Crop,
                             modifier = Modifier.background(color = Color.White, shape = CircleShape)
                                 .size(60.dp)
                                 .clip(
